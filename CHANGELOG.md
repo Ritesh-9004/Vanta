@@ -51,9 +51,9 @@ First public release of Vanta — the universal MCU package registry.
 - Configurable via environment variables (max repos, min stars, crawl interval)
 - Scheduled mode (`--schedule`) with APScheduler for continuous operation
 
-#### Shared Packages
-- `@vanta/types` — TypeScript type definitions shared across web and API
-- `@vanta/core` — board definitions, semver utilities, quality score helpers
+#### Shared Packages (monorepo internal)
+- `@vanta/types` — TypeScript type definitions shared across web and API (`private`, not published to npm)
+- `@vanta/core` — board definitions, semver utilities, quality score helpers (`private`, not published to npm)
 
 #### Infrastructure
 - Turborepo monorepo with pnpm workspaces
