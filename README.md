@@ -1,4 +1,4 @@
-# 📦 Packman
+# 📦 Vanta
 
 **Universal MCU Package Manager & Registry**
 
@@ -15,7 +15,7 @@ Like [pub.dev](https://pub.dev) (discovery) + [npm](https://www.npmjs.com) (work
 ## Architecture
 
 ```
-packman/
+vanta/
 ├── apps/
 │   ├── web/         → Registry website (Next.js 15, Tailwind CSS)
 │   ├── api/         → REST API (Hono, Bun, Drizzle ORM)
@@ -56,8 +56,8 @@ packman/
 ### 1. Clone & install
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/packman.git
-cd packman
+git clone https://github.com/Ritesh-9004/Vanta.git
+cd vanta
 pnpm install
 ```
 
@@ -67,7 +67,7 @@ pnpm install
 docker compose up -d
 ```
 
-This spins up PostgreSQL 16 on port `5432` (user: `postgres`, password: `dev`, database: `packman`).
+This spins up PostgreSQL 16 on port `5432` (user: `postgres`, password: `dev`, database: `vanta`).
 
 ### 3. Set up environment variables
 

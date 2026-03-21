@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### 🎉 Initial Release
 
-First public release of Packman — the universal MCU package registry.
+First public release of Vanta — the universal MCU package registry.
 
 ### Added
 
@@ -52,8 +52,8 @@ First public release of Packman — the universal MCU package registry.
 - Scheduled mode (`--schedule`) with APScheduler for continuous operation
 
 #### Shared Packages
-- `@packman/types` — TypeScript type definitions shared across web and API
-- `@packman/core` — board definitions, semver utilities, quality score helpers
+- `@vanta/types` — TypeScript type definitions shared across web and API
+- `@vanta/core` — board definitions, semver utilities, quality score helpers
 
 #### Infrastructure
 - Turborepo monorepo with pnpm workspaces

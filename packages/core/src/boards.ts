@@ -1,4 +1,4 @@
-import type { Platform, Framework, MemoryFootprint } from "@packman/types";
+import type { Platform, Framework, MemoryFootprint } from "@vanta/types";
 
 export interface BoardDefinition {
   id: string;

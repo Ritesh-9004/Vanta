@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vanta CLI — Build Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Syne:wght@700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0d1117;--bg2:#161b22;--bg3:#21262d;
+  --border:#30363d;--border2:#484f58;
+  --green:#3fb950;--gdim:rgba(63,185,80,0.12);
+  --blue:#58a6ff;--bdim:rgba(88,166,255,0.1);
+  --amber:#e3b341;--adim:rgba(227,179,65,0.1);
+  --red:#f85149;--rdim:rgba(248,81,73,0.1);
+  --purple:#bc8cff;--pdim:rgba(188,140,255,0.1);
+  --text:#e6edf3;--text2:#8b949e;--text3:#484f58;
+  --mono:'IBM Plex Mono',monospace;
+  --display:'Syne',sans-serif;
+  --body:'Inter',sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--body);font-size:14px;line-height:1.6}
+.nav{display:flex;align-items:center;background:var(--bg2);border-bottom:1px solid var(--border);padding:0 20px;position:sticky;top:0;z-index:100;overflow-x:auto}
+.logo{font-family:var(--mono);font-size:13px;font-weight:600;color:var(--green);padding:13px 16px 13px 0;border-right:1px solid var(--border);margin-right:10px;flex-shrink:0}
+.ntab{padding:13px 13px;font-size:12px;color:var(--text2);cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:color .15s}
+.ntab:hover{color:var(--text)}
+.ntab.on{color:var(--green);border-bottom-color:var(--green)}
+.panel{display:none}.panel.show{display:block}
+.wrap{max-width:900px;margin:0 auto;padding:32px 20px}
+.page-title{font-family:var(--display);font-size:26px;font-weight:800;color:var(--text);margin-bottom:4px}
+.page-sub{font-size:13px;color:var(--text2);margin-bottom:28px}
+h2{font-family:var(--display);font-size:17px;font-weight:700;color:var(--text);margin:26px 0 12px;display:flex;align-items:center;gap:10px}
+h2::after{content:'';flex:1;height:1px;background:var(--border)}
+
+/* CODE BLOCKS */
+.code{background:var(--bg2);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin:12px 0}
+.code-header{padding:9px 16px;background:var(--bg3);border-bottom:1px solid var(--border);font-family:var(--mono);font-size:11px;color:var(--text2);display:flex;align-items:center;gap:8px}
+.ch-dot{width:8px;height:8px;border-radius:50%}
+.code-body{padding:16px 18px;font-family:var(--mono);font-size:12px;line-height:2;overflow-x:auto;color:var(--text)}
+.kw{color:#ff7b72}.ty{color:#79c0ff}.cm{color:var(--text3);font-style:italic}
+.st{color:var(--green)}.fn{color:#d2a8ff}.tb{color:var(--amber)}.cn{color:#39d353}
+.cg{color:var(--green);font-weight:500}.cc{color:var(--text3);font-style:italic}
+
+/* STEPS */
+.steps{display:flex;flex-direction:column;gap:0}
+.step{display:flex;gap:0}
+.sl{display:flex;flex-direction:column;align-items:center;width:40px;flex-shrink:0}
+.snum{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;font-weight:600;z-index:1}
+.sline{width:2px;flex:1;background:var(--border);margin:3px 0}
+.sr{flex:1;padding:0 0 22px 14px}
+.s-title{font-size:14px;font-weight:600;color:var(--text);margin-bottom:4px;font-family:var(--display)}
+.s-sub{font-size:12px;color:var(--text2);margin-bottom:10px;line-height:1.6}
+
+/* CMD GRID */
+.cmd-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px;margin-bottom:20px}
+.cmd-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:14px 16px}
+.cmd-card.priority{border-color:var(--green)}
+.cc-badge{font-size:9px;font-weight:700;padding:2px 7px;border-radius:4px;display:inline-block;margin-bottom:8px;font-family:var(--mono)}
+.cb-must{background:var(--gdim);color:var(--green)}
+.cb-high{background:var(--bdim);color:var(--blue)}
+.cb-later{background:var(--adim);color:var(--amber)}
+.cc-cmd{font-family:var(--mono);font-size:14px;font-weight:600;color:var(--green);margin-bottom:4px}
+.cc-body{font-size:12px;color:var(--text2);line-height:1.6}
+.cc-does{font-size:11px;font-family:var(--mono);color:var(--text3);margin-top:8px;line-height:1.8}
+
+/* FLOW */
+.flow{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:16px 18px;font-family:var(--mono);font-size:12px;line-height:2.2;margin:12px 0;color:var(--text)}
+.flow-comment{color:var(--text3);font-style:italic}
+.flow-cmd{color:var(--green);font-weight:500}
+.flow-out{color:var(--text2)}
+.flow-ok{color:var(--green)}
+.flow-err{color:var(--red)}
+.flow-info{color:var(--blue)}
+
+/* TABLE */
+table{width:100%;border-collapse:collapse;font-size:12px;margin:12px 0 20px}
+th{padding:9px 12px;background:var(--bg3);font-weight:500;text-align:left;border-bottom:1px solid var(--border);color:var(--text2);font-family:var(--mono);font-size:11px}
+td{padding:9px 12px;border-bottom:1px solid var(--border);vertical-align:top;color:var(--text2)}
+td:first-child{color:var(--text);font-family:var(--mono);font-size:11px}
+tr:last-child td{border-bottom:none}
+
+.tip{background:var(--bdim);border-left:2px solid var(--blue);border-radius:0 8px 8px 0;padding:10px 14px;font-size:12px;color:var(--text2);margin:12px 0;line-height:1.7}
+.tip strong{color:var(--text)}
+.warn{background:var(--adim);border-left:2px solid var(--amber);border-radius:0 8px 8px 0;padding:10px 14px;font-size:12px;color:var(--text2);margin:12px 0}
+.warn strong{color:var(--amber)}
+</style>
+</head>
+<body>
+
+<div class="nav">
+  <div class="logo">vanta<span style="color:var(--text2)">/cli</span></div>
+  <div class="ntab on" onclick="show('p1',this)">Overview</div>
+  <div class="ntab" onclick="show('p2',this)">Setup & Structure</div>
+  <div class="ntab" onclick="show('p3',this)">Commands (v1)</div>
+  <div class="ntab" onclick="show('p4',this)">Core Files</div>
+  <div class="ntab" onclick="show('p5',this)">What install Does</div>
+  <div class="ntab" onclick="show('p6',this)">AI Agent Prompt</div>
+</div>
+
+<!-- P1: OVERVIEW -->
+<div class="panel show" id="p1">
+<div class="wrap">
+  <div class="page-title">CLI Build Plan</div>
+  <div class="page-sub">Exact build order, what to skip, what to ship first</div>
+
+  <h2>Language decision — Rust or TypeScript?</h2>
+  <table>
+    <tr><th>Factor</th><th>Rust</th><th>TypeScript (Bun)</th></tr>
+    <tr><td>Build time for v1</td><td style="color:var(--amber)">4–6 weeks</td><td style="color:var(--green)">1–2 weeks</td></tr>
+    <tr><td>Single binary output</td><td style="color:var(--green)">✓ Yes</td><td style="color:var(--amber)">~ With bun compile</td></tr>
+    <tr><td>Startup speed</td><td style="color:var(--green)">Instant</td><td style="color:var(--green)">Instant with Bun</td></tr>
+    <tr><td>You already know it</td><td style="color:var(--red)">Need to learn</td><td style="color:var(--green)">Yes (same as your API)</td></tr>
+    <tr><td>Share code with API</td><td style="color:var(--red)">✗ No</td><td style="color:var(--green)">✓ Yes — same types</td></tr>
+    <tr><td>Long-term correctness</td><td style="color:var(--green)">Best</td><td style="color:var(--amber)">Good enough for v1</td></tr>
+    <tr><td>Right now decision</td><td colspan="2" style="color:var(--green);font-weight:500">Build v1 in TypeScript/Bun. Rewrite in Rust for v2 when you have users.</td></tr>
+  </table>
+
+  <h2>Build order — what to ship first</h2>
+  <div class="cmd-grid">
+    <div class="cmd-card priority">
+      <div class="cc-badge cb-must">SHIP FIRST</div>
+      <div class="cc-cmd">vanta search</div>
+      <div class="cc-body">Search the registry from terminal. Calls your existing API. Shows results with quality scores. Easiest to build, immediately useful.</div>
+      <div class="cc-does">Time: 1 day</div>
+    </div>
+    <div class="cmd-card priority">
+      <div class="cc-badge cb-must">SHIP FIRST</div>
+      <div class="cc-cmd">vanta install</div>
+      <div class="cc-body">Downloads package from registry, extracts to project folder, updates vanta.toml and vanta.lock. The core feature.</div>
+      <div class="cc-does">Time: 3-4 days</div>
+    </div>
+    <div class="cmd-card priority">
+      <div class="cc-badge cb-must">SHIP FIRST</div>
+      <div class="cc-cmd">vanta init</div>
+      <div class="cc-body">Creates vanta.toml in current directory. Asks: board, framework. Generates starter config. First command every new user runs.</div>
+      <div class="cc-does">Time: half a day</div>
+    </div>
+    <div class="cmd-card">
+      <div class="cc-badge cb-high">V1.1</div>
+      <div class="cc-cmd">vanta add</div>
+      <div class="cc-body">Adds a dependency to vanta.toml without downloading. Like npm install --save vs just editing package.json.</div>
+      <div class="cc-does">Time: 1 day</div>
+    </div>
+    <div class="cmd-card">
+      <div class="cc-badge cb-high">V1.1</div>
+      <div class="cc-cmd">vanta list</div>
+      <div class="cc-body">Shows all installed packages with versions and quality scores. Reads from vanta.lock.</div>
+      <div class="cc-does">Time: half a day</div>
+    </div>
+    <div class="cmd-card">
+      <div class="cc-badge cb-high">V1.1</div>
+      <div class="cc-cmd">vanta update</div>
+      <div class="cc-body">Updates packages to latest versions within semver constraints. Rewrites vanta.lock.</div>
+      <div class="cc-does">Time: 1-2 days</div>
+    </div>
+    <div class="cmd-card">
+      <div class="cc-badge cb-later">V2</div>
+      <div class="cc-cmd">vanta build</div>
+      <div class="cc-body">Wraps CMake + Ninja. Compiles firmware. Shows memory report. Hardest command — skip for v1.</div>
+      <div class="cc-does">Time: 2-3 weeks</div>
+    </div>
+    <div class="cmd-card">
+      <div class="cc-badge cb-later">V2</div>
+      <div class="cc-cmd">vanta flash</div>
+      <div class="cc-body">Wraps esptool. Flashes firmware to device. Depends on vanta build working first.</div>
+      <div class="cc-does">Time: 1 week</div>
+    </div>
+    <div class="cmd-card">
+      <div class="cc-badge cb-later">V2</div>
+      <div class="cc-cmd">vanta publish</div>
+      <div class="cc-body">Publishes a library to the registry. Needs auth system first.</div>
+      <div class="cc-does">Time: 1 week</div>
+    </div>
+  </div>
+
+  <div class="tip"><strong>The v1 goal:</strong> vanta init + vanta search + vanta install. That's it. A developer can find a library and add it to their project. Everything else comes after you have real users.</div>
+</div>
+</div>
+
+<!-- P2: SETUP -->
+<div class="panel" id="p2">
+<div class="wrap">
+  <div class="page-title">Setup & Folder Structure</div>
+  <div class="page-sub">Create the CLI package inside your existing monorepo</div>
+
+  <h2>Create the CLI workspace</h2>
+  <div class="code">
+    <div class="code-header"><div class="ch-dot" style="background:var(--amber)"></div>terminal — from monorepo root</div>
+    <div class="code-body">
+<span class="cc"># Create CLI directory inside your monorepo</span>
+<span class="cg">mkdir</span> apps/cli && <span class="cg">cd</span> apps/cli
+<span class="cg">bun init</span> -y
+
+<span class="cc"># Install dependencies</span>
+<span class="cg">bun add</span> commander    <span class="cc"># CLI argument parsing (like clap for Rust)</span>
+<span class="cg">bun add</span> chalk        <span class="cc"># colored terminal output</span>
+<span class="cg">bun add</span> ora          <span class="cc"># loading spinners</span>
+<span class="cg">bun add</span> @inquirer/prompts  <span class="cc"># interactive prompts for init command</span>
+<span class="cg">bun add</span> semver       <span class="cc"># version range checking</span>
+<span class="cg">bun add</span> tar          <span class="cc"># extract downloaded tarballs</span>
+<span class="cg">bun add -d</span> @types/semver @types/tar bun-types
+    </div>
+  </div>
+
+  <h2>Folder structure — apps/cli/</h2>
+  <div class="code">
+    <div class="code-header"><div class="ch-dot" style="background:var(--green)"></div>apps/cli/</div>
+    <div class="code-body">
+apps/cli/
+├── <span class="cn">package.json</span>          <span class="cc">← name: "vanta", bin: { vanta: "./src/index.ts" }</span>
+├── <span class="cn">tsconfig.json</span>
+├── src/
+│   ├── <span class="cn">index.ts</span>          <span class="cc">← entry point, registers all commands</span>
+│   ├── commands/
+│   │   ├── <span class="cn">init.ts</span>       <span class="cc">← vanta init</span>
+│   │   ├── <span class="cn">search.ts</span>     <span class="cc">← vanta search [query]</span>
+│   │   ├── <span class="cn">install.ts</span>    <span class="cc">← vanta install [package]</span>
+│   │   ├── <span class="cn">add.ts</span>        <span class="cc">← vanta add [package]</span>
+│   │   ├── <span class="cn">list.ts</span>       <span class="cc">← vanta list</span>
+│   │   └── <span class="cn">update.ts</span>     <span class="cc">← vanta update</span>
+│   ├── core/
+│   │   ├── <span class="cn">config.ts</span>     <span class="cc">← read/write vanta.toml</span>
+│   │   ├── <span class="cn">lockfile.ts</span>   <span class="cc">← read/write vanta.lock</span>
+│   │   ├── <span class="cn">registry.ts</span>   <span class="cc">← HTTP calls to your API</span>
+│   │   ├── <span class="cn">downloader.ts</span> <span class="cc">← download + extract package tarballs</span>
+│   │   └── <span class="cn">resolver.ts</span>   <span class="cc">← semver dependency resolution</span>
+│   └── utils/
+│       ├── <span class="cn">logger.ts</span>     <span class="cc">← colored output helpers</span>
+│       └── <span class="cn">paths.ts</span>      <span class="cc">← find project root, .vanta/ folder</span>
+    </div>
+  </div>
+
+  <h2>package.json for the CLI</h2>
+  <div class="code">
+    <div class="code-header"><div class="ch-dot" style="background:var(--blue)"></div>apps/cli/package.json</div>
+    <div class="code-body">
+{
+  <span class="st">"name"</span>: <span class="st">"vanta"</span>,
+  <span class="st">"version"</span>: <span class="st">"0.1.0"</span>,
+  <span class="st">"description"</span>: <span class="st">"Universal MCU package manager"</span>,
+  <span class="st">"bin"</span>: {
+    <span class="st">"vanta"</span>: <span class="st">"./src/index.ts"</span>   <span class="cm">// this makes 'vanta' command work</span>
+  },
+  <span class="st">"scripts"</span>: {
+    <span class="st">"dev"</span>: <span class="st">"bun src/index.ts"</span>,
+    <span class="st">"build"</span>: <span class="st">"bun build src/index.ts --compile --outfile vanta"</span>,
+    <span class="st">"build:win"</span>: <span class="st">"bun build src/index.ts --compile --target=bun-windows-x64 --outfile vanta.exe"</span>
+  }
+}
+    </div>
+  </div>
+
+  <div class="tip"><strong>bun build --compile</strong> creates a single executable binary — no Node.js or Bun runtime needed on the user's machine. Windows users get vanta.exe, Mac/Linux get vanta. This is how you distribute the CLI.</div>
+</div>
+</div>
+
+<!-- P3: COMMANDS -->
+<div class="panel" id="p3">
+<div class="wrap">
+  <div class="page-title">Commands — v1 Implementation</div>
+  <div class="page-sub">Exact user experience for each command</div>
+
+  <h2>vanta search [query]</h2>
+  <div class="flow">
+<span class="flow-comment"># User types:</span>
+<span class="flow-cmd">$ vanta search "temperature sensor"</span>
+
+<span class="flow-info">Searching vanta registry for "temperature sensor"...</span>
+
+<span class="flow-out">┌─────────────────────────────────────────────────────────────┐</span>
+<span class="flow-out">│  bme280          ⬛⬛⬛⬛⬛⬛⬛⬛⬛⬜  92  ESP32 STM32 AVR  │</span>
+<span class="flow-out">│  Temperature, humidity, pressure sensor driver              │</span>
+<span class="flow-out">│  v2.4.1 · ⭐ 1,203 · Arduino + ESP-IDF                     │</span>
+<span class="flow-out">├─────────────────────────────────────────────────────────────┤</span>
+<span class="flow-out">│  dht              ⬛⬛⬛⬛⬛⬛⬛⬜⬜⬜  78  ESP32 AVR       │</span>
+<span class="flow-out">│  DHT11/DHT22 temperature and humidity library               │</span>
+<span class="flow-out">│  v1.4.6 · ⭐ 891 · Arduino                                 │</span>
+<span class="flow-out">├─────────────────────────────────────────────────────────────┤</span>
+<span class="flow-out">│  sht31            ⬛⬛⬛⬛⬛⬛⬜⬜⬜⬜  60  ESP32 RP2040    │</span>
+<span class="flow-out">│  Sensirion SHT31 temperature + humidity                     │</span>
+<span class="flow-out">│  v1.2.0 · ⭐ 234 · Arduino                                 │</span>
+<span class="flow-out">└─────────────────────────────────────────────────────────────┘</span>
+
+<span class="flow-ok">3 packages found.</span> Run <span class="flow-cmd">vanta install bme280</span> to install.
+  </div>
+
+  <h2>vanta init</h2>
+  <div class="flow">
+<span class="flow-cmd">$ vanta init</span>
+
+<span class="flow-info">Initializing new vanta project...</span>
+
+<span class="flow-out">? Project name: </span><span class="flow-ok">weather_station</span>
+<span class="flow-out">? Target board: </span><span class="flow-ok">ESP32-DevKitC-V4</span>
+<span class="flow-out">? Framework: </span><span class="flow-ok">Arduino</span>
+
+<span class="flow-ok">✓ Created vanta.toml</span>
+<span class="flow-ok">✓ Created src/main.cpp</span>
+<span class="flow-ok">✓ Created .gitignore</span>
+
+<span class="flow-info">Next: vanta install [package] to add libraries</span>
+  </div>
+
+  <h2>vanta install [package]</h2>
+  <div class="flow">
+<span class="flow-cmd">$ vanta install bme280</span>
+
+<span class="flow-info">Resolving bme280...</span>
+<span class="flow-ok">  → bme280@2.4.1 found (quality: 92)</span>
+<span class="flow-ok">  → ArduinoJSON@7.0.4 (dependency, auto-resolved)</span>
+
+<span class="flow-info">Checking compatibility...</span>
+<span class="flow-ok">  ✓ ESP32 — compatible</span>
+<span class="flow-ok">  ✓ Arduino framework — compatible</span>
+
+<span class="flow-info">Downloading packages...</span>
+<span class="flow-ok">  ✓ bme280@2.4.1 (14.2 KB)</span>
+<span class="flow-ok">  ✓ ArduinoJSON@7.0.4 (180 KB)</span>
+
+<span class="flow-info">Installing to .vanta/packages/...</span>
+<span class="flow-ok">  ✓ Extracted bme280@2.4.1</span>
+<span class="flow-ok">  ✓ Extracted ArduinoJSON@7.0.4</span>
+
+<span class="flow-info">Updating vanta.toml and vanta.lock...</span>
+
+<span class="flow-ok">✓ 2 packages installed successfully</span>
+
+<span class="flow-info">In your code:</span>
+<span class="flow-out">  #include "bme280.h"</span>
+  </div>
+
+  <h2>vanta list</h2>
+  <div class="flow">
+<span class="flow-cmd">$ vanta list</span>
+
+<span class="flow-out">Installed packages in weather_station:</span>
+
+<span class="flow-out">  bme280          2.4.1   quality:92  ESP32 STM32 AVR</span>
+<span class="flow-out">  ArduinoJSON     7.0.4   quality:88  ESP32 STM32 AVR</span>
+<span class="flow-out">  FastLED         3.7.2   quality:91  ESP32 AVR</span>
+
+<span class="flow-ok">3 packages installed.</span>
+  </div>
+</div>
+</div>
+
+<!-- P4: CORE FILES -->
+<div class="panel" id="p4">
+<div class="wrap">
+  <div class="page-title">Core Files — Exact Code</div>
+  <div class="page-sub">The key files to write first</div>
+
+  <h2>src/index.ts — entry point</h2>
+  <div class="code">
+    <div class="code-header"><div class="ch-dot" style="background:var(--green)"></div>src/index.ts</div>
+    <div class="code-body">
+<span class="kw">#!/usr/bin/env bun</span>
+<span class="kw">import</span> { Command } <span class="kw">from</span> <span class="st">'commander'</span>
+<span class="kw">import</span> { searchCommand } <span class="kw">from</span> <span class="st">'./commands/search'</span>
+<span class="kw">import</span> { installCommand } <span class="kw">from</span> <span class="st">'./commands/install'</span>
+<span class="kw">import</span> { initCommand } <span class="kw">from</span> <span class="st">'./commands/init'</span>
+<span class="kw">import</span> { listCommand } <span class="kw">from</span> <span class="st">'./commands/list'</span>
+
+<span class="kw">const</span> program = <span class="kw">new</span> <span class="fn">Command</span>()
+
+program
+  .name(<span class="st">'vanta'</span>)
+  .description(<span class="st">'Universal MCU package manager'</span>)
+  .version(<span class="st">'0.1.0'</span>)
+
+program
+  .command(<span class="st">'init'</span>)
+  .description(<span class="st">'Initialize a new vanta project'</span>)
+  .action(initCommand)
+
+program
+  .command(<span class="st">'search &lt;query&gt;'</span>)
+  .description(<span class="st">'Search the vanta registry'</span>)
+  .option(<span class="st">'-p, --platform &lt;platform&gt;'</span>, <span class="st">'Filter by platform (esp32, stm32, rp2040)'</span>)
+  .option(<span class="st">'-f, --framework &lt;framework&gt;'</span>, <span class="st">'Filter by framework (arduino, espidf)'</span>)
+  .action(searchCommand)
+
+program
+  .command(<span class="st">'install [packages...]'</span>)
+  .alias(<span class="st">'i'</span>)
+  .description(<span class="st">'Install packages'</span>)
+  .action(installCommand)
+
+program
+  .command(<span class="st">'list'</span>)
+  .alias(<span class="st">'ls'</span>)
+  .description(<span class="st">'List installed packages'</span>)
+  .action(listCommand)
+
+program.parse()
+    </div>
+  </div>
+
+  <h2>src/core/config.ts — reads/writes vanta.toml</h2>
+  <div class="code">
+    <div class="code-header"><div class="ch-dot" style="background:var(--blue)"></div>src/core/config.ts</div>
+    <div class="code-body">
+<span class="kw">import</span> { readFileSync, writeFileSync, existsSync } <span class="kw">from</span> <span class="st">'fs'</span>
+<span class="kw">import</span> { join } <span class="kw">from</span> <span class="st">'path'</span>
+<span class="kw">import</span> TOML <span class="kw">from</span> <span class="st">'@iarna/toml'</span>  <span class="cm">// bun add @iarna/toml</span>
+
+<span class="kw">export interface</span> <span class="ty">VantaConfig</span> {
+  project: {
+    name: <span class="ty">string</span>
+    version: <span class="ty">string</span>
+  }
+  target: {
+    board: <span class="ty">string</span>
+    chip: <span class="ty">string</span>
+    framework: <span class="ty">string</span>
+  }
+  dependencies: <span class="ty">Record</span>&lt;<span class="ty">string</span>, <span class="ty">string</span>&gt;
+}
+
+<span class="kw">export function</span> <span class="fn">readConfig</span>(cwd = process.cwd()): <span class="ty">VantaConfig</span> | <span class="ty">null</span> {
+  <span class="kw">const</span> configPath = <span class="fn">join</span>(cwd, <span class="st">'vanta.toml'</span>)
+  <span class="kw">if</span> (!<span class="fn">existsSync</span>(configPath)) <span class="kw">return null</span>
+  <span class="kw">const</span> content = <span class="fn">readFileSync</span>(configPath, <span class="st">'utf-8'</span>)
+  <span class="kw">return</span> TOML.<span class="fn">parse</span>(content) <span class="kw">as</span> <span class="ty">VantaConfig</span>
+}
+
+<span class="kw">export function</span> <span class="fn">writeConfig</span>(config: <span class="ty">VantaConfig</span>, cwd = process.cwd()) {
+  <span class="kw">const</span> configPath = <span class="fn">join</span>(cwd, <span class="st">'vanta.toml'</span>)
+  <span class="fn">writeFileSync</span>(configPath, TOML.<span class="fn">stringify</span>(config <span class="kw">as any</span>))
+}
+
+<span class="kw">export function</span> <span class="fn">addDependency</span>(name: <span class="ty">string</span>, version: <span class="ty">string</span>) {
+  <span class="kw">const</span> config = <span class="fn">readConfig</span>()
+  <span class="kw">if</span> (!config) <span class="kw">throw new</span> <span class="fn">Error</span>(<span class="st">'No vanta.toml found. Run vanta init first.'</span>)
+  config.dependencies[name] = <span class="st">`^${version}`</span>
+  <span class="fn">writeConfig</span>(config)
+}
+    </div>
+  </div>
+
+  <h2>src/core/registry.ts — calls your API</h2>
+  <div class="code">
+    <div class="code-header"><div class="ch-dot" style="background:var(--purple)"></div>src/core/registry.ts</div>
+    <div class="code-body">
+<span class="kw">const</span> REGISTRY_URL = <span class="st">'https://registry.vanta.dev'</span>  <span class="cm">// your API URL</span>
+
+<span class="kw">export async function</span> <span class="fn">searchPackages</span>(query: <span class="ty">string</span>, filters?: {
+  platform?: <span class="ty">string</span>
+  framework?: <span class="ty">string</span>
+}) {
+  <span class="kw">const</span> params = <span class="kw">new</span> <span class="ty">URLSearchParams</span>({ q: query, ...filters })
+  <span class="kw">const</span> res = <span class="kw">await</span> <span class="fn">fetch</span>(<span class="st">`${REGISTRY_URL}/search?${params}`</span>)
+  <span class="kw">if</span> (!res.ok) <span class="kw">throw new</span> <span class="fn">Error</span>(<span class="st">'Registry unreachable'</span>)
+  <span class="kw">return</span> res.<span class="fn">json</span>()
+}
+
+<span class="kw">export async function</span> <span class="fn">getPackage</span>(name: <span class="ty">string</span>, version?: <span class="ty">string</span>) {
+  <span class="kw">const</span> url = version
+    ? <span class="st">`${REGISTRY_URL}/packages/${name}/${version}`</span>
+    : <span class="st">`${REGISTRY_URL}/packages/${name}`</span>
+  <span class="kw">const</span> res = <span class="kw">await</span> <span class="fn">fetch</span>(url)
+  <span class="kw">if</span> (res.status === 404) <span class="kw">throw new</span> <span class="fn">Error</span>(<span class="st">`Package "${name}" not found in registry`</span>)
+  <span class="kw">return</span> res.<span class="fn">json</span>()
+}
+
+<span class="kw">export async function</span> <span class="fn">downloadTarball</span>(tarballUrl: <span class="ty">string</span>, destPath: <span class="ty">string</span>) {
+  <span class="kw">const</span> res = <span class="kw">await</span> <span class="fn">fetch</span>(tarballUrl)
+  <span class="kw">const</span> buffer = <span class="kw">await</span> res.<span class="fn">arrayBuffer</span>()
+  <span class="kw">await</span> Bun.<span class="fn">write</span>(destPath, buffer)
+}
+    </div>
+  </div>
+
+  <h2>vanta.toml — generated by init</h2>
+  <div class="code">
+    <div class="code-header"><div class="ch-dot" style="background:var(--amber)"></div>vanta.toml (in user's project)</div>
+    <div class="code-body">
+[project]
+name    = <span class="st">"weather_station"</span>
+version = <span class="st">"0.1.0"</span>
+
+[target]
+board     = <span class="st">"esp32-devkitc-v4"</span>
+chip      = <span class="st">"esp32s3"</span>
+framework = <span class="st">"arduino"</span>
+
+[dependencies]
+bme280      = <span class="st">"^2.4.1"</span>
+ArduinoJSON = <span class="st">"^7.0.4"</span>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- P5: WHAT INSTALL DOES -->
+<div class="panel" id="p5">
+<div class="wrap">
+  <div class="page-title">What vanta install Does — Step by Step</div>
+  <div class="page-sub">Exactly what happens on disk when a user runs vanta install bme280</div>
+
+  <div class="steps">
+    <div class="step">
+      <div class="sl"><div class="snum" style="background:var(--gdim);color:var(--green);border:1px solid var(--green)">1</div><div class="sline"></div></div>
+      <div class="sr">
+        <div class="s-title">Read vanta.toml</div>
+        <div class="s-sub">Find the project root by walking up directories looking for vanta.toml. Read target chip and framework — needed for compatibility checking.</div>
+        <div class="code" style="margin:0">
+          <div class="code-body" style="padding:10px 14px">
+<span class="cm">// Find project root</span>
+<span class="kw">const</span> config = <span class="fn">readConfig</span>()  <span class="cm">// reads vanta.toml</span>
+<span class="cm">// config.target.chip = "esp32s3"</span>
+<span class="cm">// config.target.framework = "arduino"</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="sl"><div class="snum" style="background:var(--gdim);color:var(--green);border:1px solid var(--green)">2</div><div class="sline"></div></div>
+      <div class="sr">
+        <div class="s-title">Resolve version from registry</div>
+        <div class="s-sub">Call GET /packages/bme280 on your API. Get the latest version that satisfies the semver range. Also fetch its dependencies list.</div>
+        <div class="code" style="margin:0">
+          <div class="code-body" style="padding:10px 14px">
+<span class="kw">const</span> pkg = <span class="kw">await</span> <span class="fn">getPackage</span>(<span class="st">'bme280'</span>)
+<span class="cm">// pkg.version = "2.4.1"</span>
+<span class="cm">// pkg.tarball_url = "https://r2.../bme280-2.4.1.tar.gz"</span>
+<span class="cm">// pkg.dependencies = { "ArduinoJSON": "^7.0.0" }</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="sl"><div class="snum" style="background:var(--gdim);color:var(--green);border:1px solid var(--green)">3</div><div class="sline"></div></div>
+      <div class="sr">
+        <div class="s-title">Check compatibility</div>
+        <div class="s-sub">Does this package support the user's chip and framework? Check pkg.targets includes "esp32s3" and pkg.frameworks includes "arduino". Warn if not compatible.</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="sl"><div class="snum" style="background:var(--gdim);color:var(--green);border:1px solid var(--green)">4</div><div class="sline"></div></div>
+      <div class="sr">
+        <div class="s-title">Resolve transitive dependencies</div>
+        <div class="s-sub">bme280 depends on ArduinoJSON@^7.0.0. Fetch that too. Check if it's already installed. Build the full install list before downloading anything.</div>
+        <div class="code" style="margin:0">
+          <div class="code-body" style="padding:10px 14px">
+<span class="cm">// Install queue: [bme280@2.4.1, ArduinoJSON@7.0.4]</span>
+<span class="cm">// ArduinoJSON already installed? skip it</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="sl"><div class="snum" style="background:var(--gdim);color:var(--green);border:1px solid var(--green)">5</div><div class="sline"></div></div>
+      <div class="sr">
+        <div class="s-title">Download tarballs</div>
+        <div class="s-sub">Download each package tarball from Cloudflare R2. Verify SHA256 hash. Save to .vanta/packages/bme280@2.4.1.tar.gz</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="sl"><div class="snum" style="background:var(--gdim);color:var(--green);border:1px solid var(--green)">6</div><div class="sline"></div></div>
+      <div class="sr">
+        <div class="s-title">Extract to .vanta/packages/</div>
+        <div class="s-sub">Extract tarball into .vanta/packages/bme280@2.4.1/ folder. This contains the library's src/, include/, and CMakeLists.txt.</div>
+        <div class="code" style="margin:0">
+          <div class="code-body" style="padding:10px 14px">
+.vanta/
+└── packages/
+    ├── bme280@2.4.1/
+    │   ├── src/bme280.c
+    │   ├── include/bme280.h
+    │   └── CMakeLists.txt
+    └── ArduinoJSON@7.0.4/
+        └── src/ArduinoJSON.h
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="sl"><div class="snum" style="background:var(--gdim);color:var(--green);border:1px solid var(--green)">7</div><div class="sline"></div></div>
+      <div class="sr">
+        <div class="s-title">Update vanta.toml + vanta.lock</div>
+        <div class="s-sub">Add bme280 = "^2.4.1" to [dependencies] in vanta.toml. Write exact resolved versions to vanta.lock for reproducible builds.</div>
+        <div class="code" style="margin:0">
+          <div class="code-body" style="padding:10px 14px">
+<span class="cm"># vanta.lock (auto-generated, always commit this)</span>
+[packages]
+bme280      = { version = <span class="st">"2.4.1"</span>, sha256 = <span class="st">"abc123..."</span> }
+ArduinoJSON = { version = <span class="st">"7.0.4"</span>, sha256 = <span class="st">"def456..."</span> }
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="sl"><div class="snum" style="background:var(--gdim);color:var(--green);border:1px solid var(--green)">8</div><div class="sline"></div></div>
+      <div class="sr">
+        <div class="s-title">Show success + usage hint</div>
+        <div class="s-sub">Tell the user what was installed and how to use it in their code. This is the UX that makes people smile.</div>
+        <div class="code" style="margin:0">
+          <div class="code-body" style="padding:10px 14px">
+<span class="cn">✓ 2 packages installed</span>
+
+In your code:
+  #include <span class="st">"bme280.h"</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="warn"><strong>For v1 — skip CMake generation.</strong> Don't try to auto-configure the build system yet. Just download and extract the libraries. Tell users to add the include path manually. CMake auto-generation comes in v2 when you have real users telling you they need it.</div>
+</div>
+</div>
+
+<!-- P6: AI PROMPT -->
+<div class="panel" id="p6">
+<div class="wrap">
+  <div class="page-title">AI Agent Prompt — CLI</div>
+  <div class="page-sub">Paste this when asking your AI to help build the CLI</div>
+
+  <div class="code">
+    <div class="code-header"><div class="ch-dot" style="background:var(--green)"></div>CLI context — paste at session start</div>
+    <div class="code-body" style="white-space:pre-wrap;line-height:1.85">
+<span class="cm"># Vanta CLI — Context for AI Agent</span>
+
+I am building the CLI for Vanta — a universal MCU package manager.
+The CLI is a TypeScript app built with Bun, using Commander for argument parsing.
+
+<span class="cm">## What the CLI does</span>
+vanta init     → creates vanta.toml in current directory
+vanta search   → queries registry API, shows results in terminal
+vanta install  → downloads packages, extracts to .vanta/, updates toml+lock
+vanta list     → shows installed packages from vanta.lock
+vanta add      → adds dep to vanta.toml without downloading
+
+<span class="cm">## File structure</span>
+apps/cli/
+├── src/index.ts           ← entry, Commander setup
+├── src/commands/          ← one file per command
+├── src/core/config.ts     ← read/write vanta.toml
+├── src/core/lockfile.ts   ← read/write vanta.lock
+├── src/core/registry.ts   ← HTTP calls to registry API
+├── src/core/downloader.ts ← download + extract tarballs
+└── src/utils/logger.ts    ← chalk colored output
+
+<span class="cm">## Key files in user's project</span>
+vanta.toml    ← user writes this (board, framework, deps)
+vanta.lock    ← auto-generated (exact versions + sha256)
+.vanta/       ← git-ignored, contains extracted packages
+
+<span class="cm">## Registry API base URL</span>
+https://registry.vanta.dev  (or localhost:3001 in dev)
+
+Endpoints:
+  GET /search?q=bme280&platform=esp32&framework=arduino
+  GET /packages/:name
+  GET /packages/:name/:version
+
+<span class="cm">## Dependencies installed</span>
+commander, chalk, ora, @inquirer/prompts, semver, tar, @iarna/toml
+
+<span class="cm">## vanta.toml format</span>
+[project]
+name    = "my_project"
+version = "0.1.0"
+
+[target]
+board     = "esp32-devkitc-v4"
+chip      = "esp32s3"
+framework = "arduino"
+
+[dependencies]
+bme280 = "^2.4.1"
+
+<span class="cm">## vanta.lock format</span>
+[packages]
+bme280 = { version = "2.4.1", sha256 = "abc...", url = "https://..." }
+
+<span class="cm">## What install does (in order)</span>
+1. Read vanta.toml for target chip + framework
+2. Call GET /packages/:name to resolve latest version
+3. Check compatibility (pkg.targets includes chip)
+4. Resolve transitive dependencies recursively
+5. Download tarballs to temp, verify SHA256
+6. Extract to .vanta/packages/name@version/
+7. Update vanta.toml [dependencies]
+8. Write vanta.lock with exact versions
+9. Print success + #include hint
+
+<span class="cm">## Rules</span>
+- Error messages must be actionable:
+  BAD:  "Error: 404"
+  GOOD: 'Package "bme280" not found. Did you mean "bme280_idf"?'
+- Always show a spinner (ora) during network calls
+- Use chalk.green for success, chalk.red for errors, chalk.yellow for warnings
+- Never crash silently — always catch and explain errors
+- v1 does NOT do CMake generation — just download + extract
+    </div>
+  </div>
+</div>
+</div>
+
+<script>
+function show(id, el) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('show'));
+  document.getElementById(id).classList.add('show');
+  document.querySelectorAll('.ntab').forEach(t => t.classList.remove('on'));
+  el.classList.add('on');
+}
+</script>
+</body>
+</html>

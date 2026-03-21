@@ -7,8 +7,8 @@ build/
 .next/
 out/
 
-# ── Packman managed folders (in user projects) ───────────
-.packman/
+# ── Vanta managed folders (in user projects) ───────────
+.vanta/
 
 # ── Environment variables (contain secrets) ───────────────
 .env

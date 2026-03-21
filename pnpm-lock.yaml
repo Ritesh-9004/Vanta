@@ -17,10 +17,10 @@ importers:
 
   apps/api:
     dependencies:
-      '@packman/core':
+      '@vanta/core':
         specifier: workspace:*
         version: link:../../packages/core
-      '@packman/types':
+      '@vanta/types':
         specifier: workspace:*
         version: link:../../packages/types
       drizzle-orm:
@@ -48,10 +48,10 @@ importers:
 
   apps/web:
     dependencies:
-      '@packman/core':
+      '@vanta/core':
         specifier: workspace:*
         version: link:../../packages/core
-      '@packman/types':
+      '@vanta/types':
         specifier: workspace:*
         version: link:../../packages/types
       lucide-react:
@@ -91,7 +91,7 @@ importers:
 
   packages/core:
     dependencies:
-      '@packman/types':
+      '@vanta/types':
         specifier: workspace:*
         version: link:../types
     devDependencies:

@@ -1,5 +1,5 @@
 """
-Packman Crawler — Configuration
+Vanta Crawler — Configuration
 """
 
 import os
@@ -11,7 +11,7 @@ load_dotenv()
 class Config:
     GITHUB_TOKEN: str = os.getenv("GITHUB_TOKEN", "")
     DATABASE_URL: str = os.getenv(
-        "DATABASE_URL", "postgresql://postgres:dev@localhost:5432/packman"
+        "DATABASE_URL", "postgresql://postgres:dev@localhost:5432/vanta"
     )
     CRAWL_INTERVAL_HOURS: int = int(os.getenv("CRAWL_INTERVAL_HOURS", "6"))
     MAX_REPOS_PER_RUN: int = int(os.getenv("MAX_REPOS_PER_RUN", "50"))

@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 
 load_dotenv("apps/crawler/.env")
 
-DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://postgres:dev@localhost:5432/packman")
+DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://postgres:dev@localhost:5432/vanta")
 
 with psycopg.connect(DATABASE_URL) as conn:
     with conn.cursor() as cur:

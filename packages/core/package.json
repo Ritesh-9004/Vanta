@@ -1,5 +1,5 @@
 {
-  "name": "@packman/core",
+  "name": "@vanta/core",
   "version": "0.1.0",
   "private": true,
   "main": "./src/index.ts",
@@ -9,7 +9,7 @@
     "lint": "tsc --noEmit"
   },
   "dependencies": {
-    "@packman/types": "workspace:*"
+    "@vanta/types": "workspace:*"
   },
   "devDependencies": {
     "typescript": "^5.7.0"

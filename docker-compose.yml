@@ -4,14 +4,14 @@ services:
   # ── PostgreSQL ──────────────────────────────────────────
   postgres:
     image: postgres:16-alpine
-    container_name: packman-db
+    container_name: vanta-db
     restart: unless-stopped
     ports:
       - "5432:5432"
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: dev
-      POSTGRES_DB: packman
+      POSTGRES_DB: vanta
     volumes:
       - pgdata:/var/lib/postgresql/data
     healthcheck:
@@ -23,12 +23,12 @@ services:
   # ── pgAdmin (optional, for DB browsing) ─────────────────
   pgadmin:
     image: dpage/pgadmin4:latest
-    container_name: packman-pgadmin
+    container_name: vanta-pgadmin
     restart: unless-stopped
     ports:
       - "5050:80"
     environment:
-      PGADMIN_DEFAULT_EMAIL: admin@packman.dev
+      PGADMIN_DEFAULT_EMAIL: admin@vanta.dev
       PGADMIN_DEFAULT_PASSWORD: admin
     depends_on:
       postgres:

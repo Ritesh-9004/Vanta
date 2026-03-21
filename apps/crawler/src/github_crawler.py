@@ -1,5 +1,5 @@
 """
-Packman Crawler — GitHub Discovery
+Vanta Crawler — GitHub Discovery
 Searches GitHub for MCU libraries via the official REST API.
 
 Ethical crawling policy
@@ -130,7 +130,7 @@ def discover_repos() -> list[RawRepo]:
     gh = Github(
         config.GITHUB_TOKEN,
         per_page=100,
-        user_agent="packman-crawler/1.0 (https://github.com/packman-registry)",
+        user_agent="vanta-crawler/1.0 (https://github.com/vanta-registry)",
     )
 
     _log_rate_status(gh)

@@ -10,7 +10,7 @@ export default function HomePage() {
       <section className="flex flex-col items-center pt-12 text-center">
         <h1 className="font-[family-name:var(--font-syne)] text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl">
           <span className="text-[var(--color-accent-green)] glow-green">
-            pkg
+            vanta
           </span>{" "}
           install anything.
         </h1>
@@ -28,7 +28,7 @@ export default function HomePage() {
         {/* Quick-install hint */}
         <div className="mt-4 flex items-center gap-2 font-[family-name:var(--font-mono)] text-sm text-[var(--color-text-muted)]">
           <span className="text-[var(--color-accent-green)]">$</span>
-          <code>packman install &lt;library&gt;</code>
+          <code>vanta install &lt;library&gt;</code>
         </div>
       </section>
 

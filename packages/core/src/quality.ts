@@ -1,4 +1,4 @@
-import type { QualityBreakdown } from "@packman/types";
+import type { QualityBreakdown } from "@vanta/types";
 
 /**
  * Input signals from GitHub + registry for computing quality score.

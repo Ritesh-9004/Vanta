@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  transpilePackages: ["@packman/types", "@packman/core"],
+  transpilePackages: ["@vanta/types", "@vanta/core"],
 };
 
 export default nextConfig;

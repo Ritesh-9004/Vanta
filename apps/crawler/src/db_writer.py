@@ -1,5 +1,5 @@
 """
-Packman Crawler — Database Writer
+Vanta Crawler — Database Writer
 Upserts discovered packages and versions into PostgreSQL.
 """
 

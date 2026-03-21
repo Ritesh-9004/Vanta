@@ -22,7 +22,7 @@ const syne = Syne({
 });
 
 export const metadata: Metadata = {
-  title: "Packman — Universal MCU Package Registry",
+  title: "Vanta — Universal MCU Package Registry",
   description:
     "Discover, compare, and install firmware libraries for ESP32, STM32, RP2040, nRF52, AVR and more. Quality scores, memory maps, and compatibility at a glance.",
   keywords: [
@@ -59,7 +59,7 @@ export default function RootLayout({
               <span className="text-[var(--color-accent-green)] glow-green">
                 ▸
               </span>
-              <span>packman</span>
+              <span>vanta</span>
             </a>
 
             <div className="flex items-center gap-6 text-sm text-[var(--color-text-secondary)]">
@@ -73,7 +73,7 @@ export default function RootLayout({
                 Docs
               </a>
               <a
-                href="https://github.com/packman-registry"
+                href="https://github.com/Ritesh-9004/Vanta"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="transition-colors hover:text-[var(--color-text-primary)]"
@@ -94,7 +94,7 @@ export default function RootLayout({
             <span className="text-[var(--color-accent-green)]">♥</span> for the
             embedded community
           </p>
-          <p className="mt-1">Packman — Universal MCU Package Registry</p>
+          <p className="mt-1">Vanta — Universal MCU Package Registry</p>
         </footer>
       </body>
     </html>

@@ -1,4 +1,4 @@
-# Packman Crawler
+# Vanta Crawler
 # Discovers MCU libraries from GitHub, scores quality, and writes to the DB.
 
 PyGithub>=2.1.1

@@ -1,5 +1,5 @@
 """
-Packman Crawler — Main Entry Point
+Vanta Crawler — Main Entry Point
 Runs discovery → extraction → scoring → DB write pipeline.
 Can be executed as a one-shot or scheduled via APScheduler.
 """
@@ -25,7 +25,7 @@ logging.basicConfig(
     format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
     datefmt="%Y-%m-%d %H:%M:%S",
 )
-logger = logging.getLogger("packman.crawler")
+logger = logging.getLogger("vanta.crawler")
 
 
 async def crawl_pipeline() -> None:
@@ -104,8 +104,8 @@ def run_scheduled() -> None:
         run_once,
         "interval",
         hours=config.CRAWL_INTERVAL_HOURS,
-        id="packman_crawl",
-        name="Packman GitHub Crawl",
+        id="vanta_crawl",
+        name="Vanta GitHub Crawl",
     )
     # Run immediately on start, then on schedule
     run_once()

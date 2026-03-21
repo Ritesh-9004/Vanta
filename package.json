@@ -1,5 +1,5 @@
 {
-  "name": "packman",
+  "name": "vanta",
   "private": true,
   "version": "0.1.0",
   "description": "Universal MCU package manager and registry — find, install, and publish firmware libraries for any microcontroller",
@@ -8,10 +8,10 @@
     "build": "turbo run build",
     "lint": "turbo run lint",
     "test": "turbo run test",
-    "db:generate": "turbo run db:generate --filter=@packman/api",
-    "db:migrate": "turbo run db:migrate --filter=@packman/api",
-    "db:push": "turbo run db:push --filter=@packman/api",
-    "db:studio": "turbo run db:studio --filter=@packman/api"
+    "db:generate": "turbo run db:generate --filter=@vanta/api",
+    "db:migrate": "turbo run db:migrate --filter=@vanta/api",
+    "db:push": "turbo run db:push --filter=@vanta/api",
+    "db:studio": "turbo run db:studio --filter=@vanta/api"
   },
   "devDependencies": {
     "turbo": "^2.4.0",

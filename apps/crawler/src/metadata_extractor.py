@@ -1,5 +1,5 @@
 """
-Packman Crawler — Metadata Extractor
+Vanta Crawler — Metadata Extractor
 Inspects repo files to detect platforms, frameworks, peripherals, and manifest data.
 """
 

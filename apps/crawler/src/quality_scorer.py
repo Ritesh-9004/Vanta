@@ -1,7 +1,7 @@
 """
-Packman Crawler — Quality Scorer
+Vanta Crawler — Quality Scorer
 Computes a 0-100 quality score from repo + extracted metadata signals.
-Mirrors the TypeScript implementation in @packman/core.
+Mirrors the TypeScript implementation in @vanta/core.
 """
 
 from __future__ import annotations

@@ -24,7 +24,7 @@ app.use(
 
 app.get("/", (c) =>
   c.json({
-    name: "packman-registry-api",
+    name: "vanta-registry-api",
     version: "0.1.0",
     status: "ok",
     docs: "/health",
@@ -75,7 +75,7 @@ app.onError((err, c) => {
 
 const port = parseInt(process.env.PORT ?? "4000", 10);
 
-console.log(`🚀 Packman API running on http://localhost:${port}`);
+console.log(`🚀 Vanta API running on http://localhost:${port}`);
 
 export default {
   port,

@@ -1,5 +1,5 @@
 {
-  "name": "@packman/api",
+  "name": "@vanta/api",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -13,8 +13,8 @@
     "db:studio": "drizzle-kit studio"
   },
   "dependencies": {
-    "@packman/types": "workspace:*",
-    "@packman/core": "workspace:*",
+    "@vanta/types": "workspace:*",
+    "@vanta/core": "workspace:*",
     "hono": "^4.7.0",
     "drizzle-orm": "^0.38.0",
     "postgres": "^3.4.0",

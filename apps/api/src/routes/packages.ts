@@ -2,7 +2,7 @@ import { Hono } from "hono";
 import { db, schema } from "../db";
 import { eq, desc, asc, sql, ilike, or, and, inArray } from "drizzle-orm";
 import { z } from "zod";
-import type { PackageSummary, Package as PackageType } from "@packman/types";
+import type { PackageSummary, Package as PackageType } from "@vanta/types";
 
 const packages = new Hono();
 
