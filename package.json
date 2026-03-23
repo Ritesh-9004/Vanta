@@ -1,7 +1,7 @@
 {
   "name": "vanta",
   "private": true,
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Universal MCU package manager and registry — find, install, and publish firmware libraries for any microcontroller",
   "scripts": {
     "dev": "turbo run dev",

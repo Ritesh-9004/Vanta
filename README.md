@@ -1,9 +1,8 @@
 <div align="center">
   <h1>📦 VantaPM - Universal MCU Package Manager & Registry</h1>
 
-
  <!-- Tech stack -->
-<img alt="Version" src="https://img.shields.io/badge/version-0.2.0-blue?style=for-the-badge" />
+<img alt="Version" src="https://img.shields.io/badge/version-0.2.1-blue?style=for-the-badge" />
 <img alt="License" src="https://img.shields.io/badge/license-MIT-green?style=for-the-badge" />
 <img alt="Language" src="https://img.shields.io/badge/language-TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white" />
 <img alt="Runtime" src="https://img.shields.io/badge/runtime-Bun-f9f1e1?style=for-the-badge&logo=bun&logoColor=black" />

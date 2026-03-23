@@ -5,6 +5,30 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.1] — 2026-03-23
+
+### Added
+
+#### Release / Distribution
+- GitHub Actions workflow to build and attach prebuilt CLI binaries for Windows, macOS, and Linux on version tags
+- End-user CLI distribution through GitHub Releases so normal users can download a single binary instead of installing Node.js or Bun
+
+#### Web (`apps/web`)
+- `sitemap.xml` generation for homepage, docs, platforms, package listing, and package detail pages
+- `robots.txt` generation with sitemap reference for search engine crawlers
+- Structured data for `WebSite`, `SearchAction`, `SoftwareApplication`, and organization metadata on the homepage
+
+### Changed
+
+#### Docs / Onboarding
+- README now clearly separates instructions for end users versus contributors/maintainers
+- README architecture section now includes the CLI app and GitHub release workflow
+- README header, intro, badges, and installation guidance were polished for clarity
+
+#### Web (`apps/web`)
+- Expanded metadata, canonical URLs, Open Graph, Twitter cards, and robots directives across key routes
+- Fixed the website header GitHub link to the renamed `Ritesh-9004/Vantapm` repository
+
 ## [0.2.0] — 2026-03-23
 
 ### Added
