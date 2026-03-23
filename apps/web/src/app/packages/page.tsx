@@ -3,6 +3,8 @@ import { FeaturedPackages } from "@/components/FeaturedPackages";
 import Link from "next/link";
 import { Suspense } from "react";
 
+export const dynamic = "force-dynamic";
+
 export default function PackagesPage() {
   const categories = ["all", "sensor", "display", "communication", "iot", "motor", "audio", "ai", "security", "power", "filesystem", "protocol", "storage", "utility"];
   const frameworks = ["arduino", "espidf", "micropython", "zephyr", "stm32hal", "picoSDK"];

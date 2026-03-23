@@ -5,6 +5,8 @@ import { VersionList } from "@/components/VersionList";
 import { CompatMatrix } from "@/components/CompatMatrix";
 import { notFound } from "next/navigation";
 
+export const dynamic = "force-dynamic";
+
 export default async function PackageDetailPage({
   params,
 }: {

@@ -4,6 +4,8 @@ import { FeaturedPackages } from "@/components/FeaturedPackages";
 import { StatsBar } from "@/components/StatsBar";
 import { Suspense } from "react";
 
+export const dynamic = "force-dynamic";
+
 export default function HomePage() {
   return (
     <div className="space-y-16">
