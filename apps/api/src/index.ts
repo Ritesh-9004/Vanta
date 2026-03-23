@@ -6,6 +6,16 @@ import packagesRouter from "./routes/packages";
 import searchRouter from "./routes/search";
 
 const app = new Hono();
+const corsOrigins = (process.env.CORS_ORIGIN ?? "")
+  .split(",")
+  .map((origin) => origin.trim())
+  .filter(Boolean);
+
+const allowedOrigins = new Set([
+  "http://localhost:3000",
+  "https://vantapm.vercel.app",
+  ...corsOrigins,
+]);
 
 // ─── Middleware ───────────────────────────────────────────────
 
@@ -14,7 +24,13 @@ app.use("*", prettyJSON());
 app.use(
   "*",
   cors({
-    origin: process.env.CORS_ORIGIN ?? "http://localhost:3000",
+    origin: (origin) => {
+      if (!origin) {
+        return "";
+      }
+
+      return allowedOrigins.has(origin) ? origin : "";
+    },
     allowMethods: ["GET", "POST", "PUT", "DELETE"],
     allowHeaders: ["Content-Type", "Authorization"],
   })
