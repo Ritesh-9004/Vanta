@@ -1,5 +1,16 @@
 import chalk from "chalk";
 
+export function bannerText() {
+  const title = chalk.bold.cyan("VANTA") + " " + chalk.bold("CLI");
+  const subtitle = chalk.dim("Universal MCU package manager");
+  const line = chalk.cyan("─".repeat(44));
+  return `\n${line}\n${title}\n${subtitle}\n${line}`;
+}
+
+export function printBanner() {
+  console.log(bannerText());
+}
+
 export const log = {
   info: (msg: string) => console.log(chalk.blue("ℹ") + " " + msg),
   success: (msg: string) => console.log(chalk.green("✓") + " " + chalk.green(msg)),

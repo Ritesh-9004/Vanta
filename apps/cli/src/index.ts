@@ -4,13 +4,31 @@ import { searchCommand } from "./commands/search.js";
 import { installCommand } from "./commands/install.js";
 import { initCommand } from "./commands/init.js";
 import { listCommand } from "./commands/list.js";
+import { doctorCommand } from "./commands/doctor.js";
+import { printBanner } from "./utils/logger.js";
 
 const program = new Command();
+
+if (
+  process.argv.length <= 2 ||
+  process.argv.includes("--help") ||
+  process.argv.includes("-h") ||
+  process.argv[2] === "help"
+) {
+  printBanner();
+}
 
 program
   .name("vanta")
   .description("Universal MCU package manager")
   .version("0.1.0");
+
+program.showHelpAfterError();
+program.showSuggestionAfterError();
+program.addHelpText(
+  "after",
+  `\nExamples:\n  $ vanta init\n  $ vanta doctor\n  $ vanta search wifi --platform esp32\n  $ vanta install bblanchon/ArduinoJson\n  $ vanta list\n`
+);
 
 program
   .command("init")
@@ -35,5 +53,10 @@ program
   .alias("ls")
   .description("List installed packages")
   .action(listCommand);
+
+program
+  .command("doctor")
+  .description("Check registry/API connectivity and environment")
+  .action(doctorCommand);
 
 program.parse();
